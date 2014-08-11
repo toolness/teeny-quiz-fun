@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <style>
-  #answers > div {
-    display: none;
-  }
-  </style>
+  <link rel="stylesheet" href="teeny-quiz.css">
   <title>Teeny Quiz Fun</title>
 </head>
 <body>
 <h1>Teeny Quiz Fun</h1>
   <section id="questions">
     <form>
-      <input type="hidden" name="submitted" value="yes">
       <p>If you could be any one animal, what would it be?</p>
       <label class="radio">
         <input type="radio" name="animal" value="rhino"
@@ -39,35 +34,15 @@
     <div id="lame">
       That isn't even an animal.
     </div>
+    <button id="reset">Take the quiz again</button>
   </section>
   <script>
+  // This should return the id of the answer you want to show.
   function getAnswerId(response) {
     if (response.animal == 'rhino' || response.animal == 'ocelot')
       return 'cool';
     return 'lame';
   }
   </script>
-  <script>
-  // http://stackoverflow.com/a/2091331
-  function getQueryVariables() {
-    var query = window.location.search.substring(1);
-    var pairs = query.split('&');
-    var vars = {};
-    for (var i = 0; i < pairs.length; i++) {
-      var pair = pairs[i].split('=');
-      vars[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-    }
-    return vars;
-  }
-
-  window.addEventListener('DOMContentLoaded', function() {
-    var response = getQueryVariables();
-    var questions = document.querySelector('#questions');
-
-    if (response.submitted == 'yes') {
-      document.getElementById(getAnswerId(response)).style.display = "block";
-      questions.style.display = "none";
-    }
-  }, false);
-  </script>
+  <script src="teeny-quiz.js"></script>
 </body>

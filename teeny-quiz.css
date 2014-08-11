@@ -1,0 +1,5 @@
+#questions:not(.selected),
+#answers:not(.selected),
+#answers > div:not(.selected) {
+  display: none;
+}
