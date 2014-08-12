@@ -3,3 +3,18 @@
 #answers > div:not(.selected) {
   display: none;
 }
+
+.error {
+  color: white;
+  background: salmon;
+  padding: 0.5em;
+}
+
+#debug {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 0 1em;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}

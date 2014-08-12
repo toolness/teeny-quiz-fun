@@ -36,7 +36,10 @@
     </div>
     <button id="reset">Take the quiz again</button>
   </section>
+  <script src="teeny-quiz.js"></script>
   <script>
+  DEBUG = true;
+
   // This should return the id of the answer you want to show.
   function getAnswerId(response) {
     if (response.animal == 'rhino' || response.animal == 'ocelot')
@@ -44,5 +47,4 @@
     return 'lame';
   }
   </script>
-  <script src="teeny-quiz.js"></script>
 </body>

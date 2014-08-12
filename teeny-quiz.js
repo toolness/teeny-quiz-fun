@@ -70,10 +70,48 @@ Localform.saveForm = function(form) {
   return result;
 };
 
-var questions = document.querySelector('#questions');
-var answers = document.querySelector('#answers');
-var reset = document.querySelector('#reset');
-var form = questions.querySelector('form');
+var questions, answers, reset, form;
+var errorCount = 0;
+
+function showError(html) {
+  var div = document.createElement('div');
+
+  div.innerHTML = html;
+  document.body.insertBefore(div, document.body.firstChild);
+  div.classList.add('error');
+
+  errorCount++;
+}
+
+function getElementById(id) {
+  var el = document.getElementById(id);
+
+  if (!el)
+    showError('There needs to be an element with <code>id="' +
+              id + '"</code> on this page!');
+
+  return el;
+}
+
+function escapeHTML(html) {
+  var div = document.createElement('div');
+  div.textContent = html;
+  return div.innerHTML;
+}
+
+function showResponseInfo(response) {
+  var debug = document.getElementById('debug');
+  if (!response || !window.DEBUG)
+    return debug ? debug.parentNode.removeChild(debug) : null;
+  if (!debug) {
+    debug = document.createElement('div');
+    debug.setAttribute('id', 'debug');
+    document.body.appendChild(debug);
+  }
+  debug.innerHTML = '<p>This is what <code>response</code> contains:</p>' +
+    '<pre>' + escapeHTML(JSON.stringify(response, null, 2)) + '</pre>' +
+    '<p>To hide this panel, set <code>DEBUG = false</code>.</p>';
+}
 
 function refreshView() {
   var selectedAnswer = answers.querySelector('.selected');
@@ -86,26 +124,56 @@ function refreshView() {
   if (selectedAnswer)
     selectedAnswer.classList.remove('selected');
 
+  showResponseInfo(response);
+
   if (response) {
     questions.classList.remove('selected');
     answers.classList.add('selected');
     answerId = getAnswerId(response);
-    selectedAnswer = document.getElementById(answerId);
-    if (!selectedAnswer)
-      throw new Error('unable to find element with id ' + answerId);
+    selectedAnswer = getElementById(answerId);
+    if (!selectedAnswer) return;
     selectedAnswer.classList.add('selected');
   }
 }
 
-window.addEventListener('DOMContentLoaded', refreshView, false);
+window.addEventListener('error', function(event) {
+  var extra = (/\.js$/i.test(event.filename))
+              ? ' of <code>' + escapeHTML(event.filename) + '</code>'
+              : '';
 
-reset.addEventListener('click', function() {
-  Localform.clearFormResponse(form);
+  showError('<strong>Alas, a JavaScript error occurred.</strong><br>' +
+            '<code>' + escapeHTML(event.message) + '</code> at line ' +
+            event.lineno + extra);
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+  if (errorCount) return;
+
+  questions = getElementById('questions');
+  answers = getElementById('answers');
+  reset = getElementById('reset');
+  form = questions && questions.querySelector('form');
+
+  if (!form)
+    showError('Unable to find the <code>&lt;form&gt;</code> in ' +
+              'the questions section of this page!');
+
+  if (typeof(getAnswerId) != 'function')
+    showError('Unable to find the JavaScript function ' +
+              '<code>getAnswerId</code> on this page!');
+
+  if (errorCount) return;
+
+  reset.addEventListener('click', function() {
+    Localform.clearFormResponse(form);
+    refreshView();
+  }, false);
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    Localform.setFormResponse(form);
+    refreshView();
+  });
+
   refreshView();
 }, false);
-
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-  Localform.setFormResponse(form);
-  refreshView();
-});
