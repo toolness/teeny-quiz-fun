@@ -11,9 +11,9 @@ quiz's HTML and JS in a live-reload environment like [Thimble][] and
 A teeny quiz web page needs to follow a basic markup API and define one
 JavaScript function. Specifically, it needs the following:
 
-* A stylesheet link including `teeny-quiz.css`.
+* A stylesheet link that includes `teeny-quiz.css`.
 
-* A script tag including `teeny-quiz.js`.
+* A script tag that includes `teeny-quiz.js`.
 
 * A `<section>` with id `questions` that contains a single `<form>`. The
   form should have:
@@ -44,7 +44,7 @@ JavaScript function. Specifically, it needs the following:
   that correspond to the selected input's `value` attribute.
   For checkboxes, values will be booleans.
 
-  This function should perform any necessary logic on `response`
+  This function should perform any necessary logic on its argument
   and return a string representing the id of a `<div>` in the
   answers section of the HTML. The related `<div>` will then
   be shown to the user.
