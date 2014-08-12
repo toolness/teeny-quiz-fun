@@ -18,7 +18,7 @@ paste it into Thimble or JS Bin.
 
 If you want to use a different base URL for the sub-resources than
 the default of `http://toolness.github.io/teeny-quiz-fun/`, you
-can supply it as a second argument to `bin/export.js`, e.g.
+can supply it as an argument to the export script, e.g.
 `node bin/export.js http://example.org/teeny-quiz/`.
 
   [teeny quiz]: http://www.buzzfeed.com/quiz
