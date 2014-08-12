@@ -6,6 +6,52 @@ Affordances have been added that make it easier to debug the
 quiz's HTML and JS in a live-reload environment like [Thimble][] and
 [JS Bin][].
 
+## API
+
+A teeny quiz web page needs to follow a basic markup API and define one
+JavaScript function. Specifically, it needs the following:
+
+* A stylesheet link including `teeny-quiz.css`.
+
+* A script tag including `teeny-quiz.js`.
+
+* A `<section>` with id `questions` that contains a single `<form>`. The
+  form should have:
+
+  * any number of checkbox inputs, each with a unique `name` attribute.
+  * any number of radio inputs, each with `name` and `value`
+    attributes. As is standard for HTML forms, radio inputs belonging
+    to the same group should have the same name.
+  * a submit button.
+
+* A `<section>` with id `answers` that contains any number of `<div>`
+  children, each with a unique id. These represent different
+  responses that can be given to the user based on their 
+  responses to the questions.
+
+* The answers section should also contain a button
+  with id `reset`, which can be used to go back to the
+  question-answering phase (this is required for live-reload
+  code editors that don't have back buttons).
+
+* A global JavaScript function called `getAnswerId`, which takes
+  a single argument called *response*.
+
+  *response* will be an object describing the user's answers
+  to the quiz questions. Each property of this object
+  corresponds to the `name` attribute of a form input in the
+  `questions` section. For radio inputs, values will be strings
+  that correspond to the selected input's `value` attribute.
+  For checkboxes, values will be booleans.
+
+  This function should perform any necessary logic on `response`
+  and return a string representing the id of a `<div>` in the
+  answers section of the HTML. The related `<div>` will then
+  be shown to the user.
+
+For a simple example that incorporates these requirements, see
+`index.html`.
+
 ## Deployment
 
 To deploy to an HTML page that only includes absolute links to
