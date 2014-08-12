@@ -55,6 +55,9 @@ JavaScript function. Specifically, it needs the following:
   pretty-printed JSON serialization of the *response* argument
   that was passed to `getAnswerId`.
 
+If any required elements are missing, feedback will be shown
+to the user so the page doesn't just fail silently.
+
 For a simple example that incorporates these requirements, see
 `index.html`.
 
