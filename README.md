@@ -49,6 +49,12 @@ JavaScript function. Specifically, it needs the following:
   answers section of the HTML. The related `<div>` will then
   be shown to the user.
 
+* Additionally, the page may optionally define a global variable
+  called `DEBUG`. If this value is truthy, then a debug panel
+  will be shown in the answer stage that displays the
+  pretty-printed JSON serialization of the *response* argument
+  that was passed to `getAnswerId`.
+
 For a simple example that incorporates these requirements, see
 `index.html`.
 
