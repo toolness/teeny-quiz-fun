@@ -61,6 +61,14 @@ to the user so the page doesn't just fail silently.
 For a simple example that incorporates these requirements, see
 `index.html`.
 
+## Limitations
+
+Currently, the answer phase is not regarded as a separate URL from
+the question phase, which means that [back button expectations][backbtn]
+are broken. This is a bug, albeit a nontrivial one to fix because
+of the disparity between live-reload development environments and
+published web pages.
+
 ## Deployment
 
 To deploy to an HTML page that only includes absolute links to
@@ -80,3 +88,4 @@ can supply it as an argument to the export script, e.g.
   [hour of code]: http://csedweek.org/
   [Thimble]: https://thimble.webmaker.org/
   [JS Bin]: http://jsbin.com/
+  [backbtn]: http://baymard.com/blog/back-button-expectations
